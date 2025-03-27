@@ -28,7 +28,8 @@ class BinaryTree {
         T* GetAllAscending();       //Returns a pointer to an array
         T* GetAllDescending();      //Returns a pointer to an array
         void EmptyTree();
-        T Remove(T inVal, Node<T> *parent);
+        T Remove(T inVal);
+        Node<T>* inOrderPred(T inVal)
 };
 
 
