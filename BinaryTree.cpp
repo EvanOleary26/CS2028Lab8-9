@@ -63,7 +63,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
             parent->left = new Node(inVal);
         }
         else {
-            recInsert(inVal, parent->left);
+            Insert(inVal, parent->left);
         }
     }
     else if (inVal > parent->data) { //add to right
@@ -71,7 +71,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
             parent->right = new Node(inVal);
         }
         else {
-            recInsert(inVal, parent->right);
+            Insert(inVal, parent->right);
         }
     }
     else {
@@ -89,10 +89,10 @@ T* BinaryTree<T>::Find(T target, Node<T> *parent) {
         return parent->data;
     }
     if (target < parent->data) {
-        return recFind(target, parent->left);
+        return Find(target, parent->left);
     }
     else {
-        return recFind(target, parent->right);
+        return Find(target, parent->right);
     }
 }
 
@@ -112,6 +112,61 @@ void BinaryTree<T>::EmptyTree() {
 }
 
 template<class T>
-T BinaryTree<T>::Remove(T inVal, Node<T> *parent) {
+T BinaryTree<T>::Remove(T inVal) { //recursive remove – NEEDS inOrderPred FUNCTION TO WORK
+	Node<T>* temp = root;
+	int retVal;
+	while (temp->data != inVal) {
+		if (temp->data > inVal) {
+			temp = temp->left;
+		}
+		else {
+			temp = temp->right;
+		}
+	}
+	if (temp->left == nullptr && temp->right == nullptr) { //leaf case
+		retVal = temp->data;
+		delete temp;
+		return retVal;
+	}
+	else if (temp->left != nullptr && temp->right == nullptr) {//left child
+		retVal = temp->data;
+		Node<T>* replacement = temp->left;
+		Remove(replacement->data);
+		temp = replacement;
+		return retVal;
+	}
+	else if (temp->left == nullptr && temp->right != nullptr) {//right child
+		retVal = temp->data;
+		Node<T>* replacement = temp->right;
+		Remove(replacement->data);
+		temp = replacement;
+		return retVal;
+	}
+	else if (temp->left != nullptr && temp->right != nullptr) { //two children
+		retVal = temp->data;
+		Node<T>* replacement = inOrderPred(temp->data);
+		Remove(replacement->data);
+		return retVal;
+	}
+	else {
+		//throw notfound error
+	}
+}
 
+template<class T>
+Node<T>* BinaryTree::inOrderPred(T inVal) {
+	Node* temp = root;
+	while (temp->data != inVal) {
+		if (temp->data > inVal) {
+			temp = temp->left;
+		}
+		else {
+			temp = temp->right;
+		}
+	}
+	temp = temp->left; //gets left subtree
+	while (temp->right != nullptr) { //finds greatest value in left subtree
+		temp = temp->right;
+	}
+	return temp;
 }
