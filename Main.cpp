@@ -1,6 +1,9 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+
+#include "Word.h"
+
 #include "BookInfo.h"
 
 void bookCat(std::ifstream& textFile, std::ofstream& outputFile);
@@ -179,3 +182,6 @@ void letterFreq(char freqPrompt, std::string fileName){
 
 	textFile.close();
 }
+
+
+

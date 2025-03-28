@@ -56,7 +56,7 @@ void BinaryTree<T>::rotateRL(Node<T> *parent, Node<T> *child) {
 template<class T>
 void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balancing to this function
     if (root == nullptr) {
-        Node* newNode = new Node(inVal);
+        Node<T>* newNode = new Node(inVal);
     }
     if (inVal < parent->data) { //add to left
         if (parent->left == nullptr) {
@@ -154,8 +154,8 @@ T BinaryTree<T>::Remove(T inVal) { //recursive remove – NEEDS inOrderPred FUNC
 }
 
 template<class T>
-Node<T>* BinaryTree::inOrderPred(T inVal) {
-	Node* temp = root;
+Node<T>* BinaryTree<T>::inOrderPred(T inVal) {
+	Node<T>* temp = root;
 	while (temp->data != inVal) {
 		if (temp->data > inVal) {
 			temp = temp->left;

@@ -9,16 +9,8 @@ class Node {
         Node<T> *right;
     
         //Constructors
-        Node() : data(T()), next(nullptr), prev(nullptr) {};
-        Node(T inVal) : data(inVal), next(nullptr), prev(nullptr) {};
+        Node() : data(T()), left(nullptr), right(nullptr) {};
+        Node(T inVal) : data(inVal), left(nullptr), right(nullptr) {};
 };
-
-
-
-
-
-
-
-
 
 #endif

@@ -3,7 +3,6 @@
 
 #include "Node.h"
  
-
 template <class T>
 class BinaryTree {
     private:
@@ -29,16 +28,7 @@ class BinaryTree {
         T* GetAllDescending();      //Returns a pointer to an array
         void EmptyTree();
         T Remove(T inVal);
-        Node<T>* inOrderPred(T inVal)
+        Node<T>* inOrderPred(T inVal);
 };
-
-
-
-
-
-
-
-
-
 
 #endif
