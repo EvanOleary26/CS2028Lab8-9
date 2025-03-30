@@ -19,8 +19,8 @@ class Word {
     int getCount() { return count; }
 
     //Operator Overload
-    bool operator>(const std::string& right) {
-        return this->word > right;
+    bool operator>(const Word& right) {
+        return this->word > right.word;
     }
 
     bool operator<(const Word& right) {

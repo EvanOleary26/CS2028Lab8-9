@@ -1,6 +1,11 @@
 #include "BinaryTree.h"
 
 template<class T>
+BinaryTree<T>::~BinaryTree() {
+    //Recursively go through the tree removing everything from it
+}
+
+template<class T>
 void BinaryTree<T>::rotateLeft(Node<T> *parent, Node<T> *child) {
     // turning "a->b->c" into "a<-b->c"
     // where parent is b (since its the new parent) and child is a (since it is the new child)
@@ -81,9 +86,9 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
 }
 
 template<class T>
-T* BinaryTree<T>::Find(T target, Node<T> *parent) {
+T BinaryTree<T>::Find(T target, Node<T> *parent) {
     if (parent == nullptr) {
-        //throw not found
+        throw Exception(0, "Cannot find item");
     }
     if (target == parent->data) {
         return parent->data;
@@ -107,14 +112,14 @@ T* BinaryTree<T>::GetAllDescending() {  //Return a pointer to an array
 }
 
 template<class T>
-void BinaryTree<T>::EmptyTree() {
+void BinaryTree<T>::EmptyTree() {   //Clear out the tree leaving a nullptr root node at the end
 
 }
 
 template<class T>
 T BinaryTree<T>::Remove(T inVal) { //recursive remove – NEEDS inOrderPred FUNCTION TO WORK
 	Node<T>* temp = root;
-	int retVal;
+	T retVal;
 	while (temp->data != inVal) {
 		if (temp->data > inVal) {
 			temp = temp->left;
@@ -149,7 +154,7 @@ T BinaryTree<T>::Remove(T inVal) { //recursive remove – NEEDS inOrderPred FUNC
 		return retVal;
 	}
 	else {
-		//throw notfound error
+        throw Exception(0, "Item not found");
 	}
 }
 
@@ -170,3 +175,6 @@ Node<T>* BinaryTree<T>::inOrderPred(T inVal) {
 	}
 	return temp;
 }
+
+//Base Template
+template class BinaryTree<Word>;

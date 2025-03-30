@@ -2,6 +2,9 @@
 #define __BINARYTREE__H
 
 #include "Node.h"
+#include "Exceptions.h"
+
+#include "Word.h"
  
 template <class T>
 class BinaryTree {
@@ -20,9 +23,12 @@ class BinaryTree {
         //Deconstructor
         ~BinaryTree();
 
+        //Getter
+        Node<T> *getRoot() { return root; }
+
         //Functions
         void Insert(T inVal, Node<T> *parent);
-        T *Find(T target, Node<T> *parent);
+        T Find(T target, Node<T> *parent);
         int returnSize() { return size; }
         T* GetAllAscending();       //Returns a pointer to an array
         T* GetAllDescending();      //Returns a pointer to an array

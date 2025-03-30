@@ -8,3 +8,7 @@ EO 3/28/25 12:25pm
     added operator overloads we should need and added ++ and -- to make counting words easier. 
   Fixed a couple of small bugs with code that was pulled from previous projects and such
   I plan to go through later and fix a lot of main with more up to date and relevant code.
+
+EO 3/30/25 7:31pm
+  worked on main, realized we dont need what we previously did, we only need the MobyDick.txt and PeterPan.txt files for filling up the tree.
+  made Find in the Tree return a T not a T*
