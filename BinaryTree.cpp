@@ -62,10 +62,15 @@ template<class T>
 void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balancing to this function
     if (root == nullptr) {
         Node<T>* newNode = new Node(inVal);
+        root = newNode;
+        size++;
+        return;
     }
     if (inVal < parent->data) { //add to left
         if (parent->left == nullptr) {
             parent->left = new Node(inVal);
+            parent->left->data++;
+            size++;
         }
         else {
             Insert(inVal, parent->left);
@@ -74,15 +79,16 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
     else if (inVal > parent->data) { //add to right
         if (parent->right == nullptr) {
             parent->right = new Node(inVal);
+            parent->right->data++;
+            size++;
         }
         else {
             Insert(inVal, parent->right);
         }
     }
-    else {
-        //throw duplicate
+    else {  //duplicate
+        parent->data++;
     }
-    size++;
 }
 
 template<class T>

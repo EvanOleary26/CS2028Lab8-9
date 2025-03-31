@@ -12,3 +12,6 @@ EO 3/28/25 12:25pm
 EO 3/30/25 7:31pm
   worked on main, realized we dont need what we previously did, we only need the MobyDick.txt and PeterPan.txt files for filling up the tree.
   made Find in the Tree return a T not a T*
+
+EO 3/31/25 12:37pm
+  added most of setupTree function fixing some bugs with it. Added lines to increase the count of words when adding them

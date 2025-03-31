@@ -5,18 +5,18 @@
 #include "Word.h"
 #include "BinaryTree.h"
 
-void setupTree() {
-	//This function will go through and add all words from the text documents to the tree
-	//this function will before adding a word to the tree will make the word lowercase and remove any punctuation it has
-}
+BinaryTree<Word> WordTree;
 
+void setupTree();
 
 int main() {
 	int promptOption;
-	BinaryTree<Word> WordTree;
+	
 
 	while(true) {
 		try{
+			setupTree();
+
 			std::cout << "What would you like to do?" << std::endl;
 			std::cout << "1. Find a word\n" 
 					  << "2. Get tree size\n"
@@ -76,4 +76,34 @@ int main() {
 
 	
 	return 0;
+}
+
+void setupTree() {
+	//This function will go through and add all words from the text documents to the tree
+	//this function will before adding a word to the tree will make the word lowercase and remove any punctuation it has
+
+	std::string curWord;
+	std::ifstream textFile;
+
+	for (int i{}; i < 2; i++) {
+		if (i == 0) {
+			textFile.open("MobyDick.txt");
+		} else {
+			textFile.open("PeterPan.txt");
+		}
+
+		while(textFile >> curWord) {
+			if (curWord != "" || curWord != "\n") {	//Check if the current word is blank or newline
+				transform(curWord.begin(), curWord.end(), curWord.begin(), ::tolower);
+				for (auto ch : curWord) {	//Remove any punctuation
+					if (ispunct(ch)) {
+						curWord.erase(curWord.find_first_of(ch));
+					}
+				}
+				Word tempWord(curWord);
+				WordTree.Insert(tempWord, WordTree.getRoot());
+			}
+		}
+	}
+	textFile.close();
 }
