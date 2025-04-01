@@ -11,8 +11,8 @@ class Word {
     public:
 
     //Constructor
-    Word() : word(""), count(0) {}
-    Word(std::string inWord) : word(inWord), count(0) {}
+    Word() : word(""), count(1) {}
+    Word(std::string inWord) : word(inWord), count(1) {}
 
     //Getters
     std::string getWord() { return word; }
@@ -33,6 +33,11 @@ class Word {
 
     bool operator!=(const Word& right) {
         return this->word != right.word;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Word& w) {
+        os << w.word;
+        return os;
     }
 
     Word operator++(int) {

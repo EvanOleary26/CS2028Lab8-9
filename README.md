@@ -15,3 +15,7 @@ EO 3/30/25 7:31pm
 
 EO 3/31/25 12:37pm
   added most of setupTree function fixing some bugs with it. Added lines to increase the count of words when adding them
+
+EO 3/31/25 8:00pm
+  Tried adding and tree balancing to Insert, couldnt get it to work for now so im just commenting it out for now will look at it later, added a display function to the tree temporarily for testing using
+  "4. Get all words in descending order" to call it. 

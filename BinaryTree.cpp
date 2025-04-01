@@ -50,26 +50,69 @@ void BinaryTree<T>::rotateRight(Node<T> *parent, Node<T> *child) {
 
 template<class T>
 void BinaryTree<T>::rotateLR(Node<T> *parent, Node<T> *child) {
-
+    //turning A right -> C left -> B into A -> B -> C into A <- B -> C
+    Node<T>* B = child->left->right;  
+    Node<T>* A = child;               
+    Node<T>* C = child->left; 
+    if (root == child) {
+        root = B;                 // B becomes the new root
+        A->left = B->right;       // A's left points to B's right
+        C->right = B->left;       // C's right points to B's left
+        B->right = A;             // B's right points to A
+        B->left = C;              // B's left points to C  
+    } else if (parent->right == child){
+        parent->right = B;        // Parent's right points to B
+        A->left = B->right;       // A's left points to B's right
+        C->right = B->left;       // C's right points to B's left
+        B->right = A;             // B's right points to A
+        B->left = C;              // B's left points to C  
+    } else {
+        parent->left = B;         // Parent's left points to B
+        A->left = B->right;       // A's left points to B's right
+        C->right = B->left;       // C's right points to B's left
+        B->right = A;             // B's right points to A
+        B->left = C;              // B's left points to C  
+    }
 }
 
 template<class T>
 void BinaryTree<T>::rotateRL(Node<T> *parent, Node<T> *child) {
-
+    //turning A left -> C right -> B into C <- B <- A into C <- B -> A
+    Node<T>* B = child->right->left;  
+    Node<T>* A = child;               
+    Node<T>* C = child->right; 
+    if (root == child) {
+        root = B;                 // B becomes the new root
+        A->right = B->left;       // A's right points to B's left
+        C->left = B->right;       // C's left points to B's right
+        B->left = A;              // B's left points to A
+        B->right = C;             // B's right points to C
+    } else if (parent->right == child){
+        parent->right = B;        // Parent's right points to B
+        A->right = B->left;       // A's right points to B's left
+        C->left = B->right;       // C's left points to B's right
+        B->left = A;              // B's left points to A
+        B->right = C;             // B's right points to C
+    } else {
+        parent->left = B;         // Parent's left points to B
+        A->right = B->left;       // A's right points to B's left
+        C->left = B->right;       // C's left points to B's right
+        B->left = A;              // B's left points to A
+        B->right = C;             // B's right points to C
+    }
 }
 
 template<class T>
 void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balancing to this function
     if (root == nullptr) {
-        Node<T>* newNode = new Node(inVal);
+        Node<T>* newNode = new Node<T>(inVal);
         root = newNode;
         size++;
         return;
     }
     if (inVal < parent->data) { //add to left
         if (parent->left == nullptr) {
-            parent->left = new Node(inVal);
-            parent->left->data++;
+            parent->left = new Node<T>(inVal);
             size++;
         }
         else {
@@ -78,8 +121,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
     }
     else if (inVal > parent->data) { //add to right
         if (parent->right == nullptr) {
-            parent->right = new Node(inVal);
-            parent->right->data++;
+            parent->right = new Node<T>(inVal);
             size++;
         }
         else {
@@ -89,6 +131,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
     else {  //duplicate
         parent->data++;
     }
+    //Balance(parent, nullptr);
 }
 
 template<class T>
@@ -105,6 +148,21 @@ T BinaryTree<T>::Find(T target, Node<T> *parent) {
     else {
         return Find(target, parent->right);
     }
+}
+
+template <class T>
+int BinaryTree<T>::getHeight(Node<T> *child){
+    if (child == nullptr) {
+        return 0;
+    }
+
+    int leftHeight = getHeight(child->left);
+    int rightHeight = getHeight(child->right);
+
+    if (leftHeight > rightHeight) {
+        return leftHeight + 1;
+    }
+    return rightHeight + 1;
 }
 
 template<class T>
@@ -180,6 +238,69 @@ Node<T>* BinaryTree<T>::inOrderPred(T inVal) {
 		temp = temp->right;
 	}
 	return temp;
+}
+
+
+template <class T>
+int BinaryTree<T>::Balance(Node<T> *parent, Node<T> *child) {
+    if (parent == nullptr) {
+        return 0;
+    }
+
+    int leftHeight = Balance(parent, parent->left);
+    int rightHeight = Balance(parent, parent->right);
+
+    if (leftHeight - rightHeight > 1) {
+        if ( Balance(parent, parent->left->left) > Balance(parent, parent->left->right) ) {
+            rotateRight(parent, parent->left);
+        } else {
+            rotateLR(parent, parent->left);
+        }
+    } else if (rightHeight - leftHeight > 1) {
+        if (Balance(parent, parent->right->left) > Balance(parent, parent->right->right)) {
+            rotateLeft(parent, parent->right);
+        } else {
+            rotateRL(parent, parent->right);
+        }
+    }
+
+    if (leftHeight > rightHeight) {
+        return leftHeight + 1;
+    }
+    return rightHeight + 1;
+}
+
+
+//Print all Nodes, showing children
+template <class T>
+void BinaryTree<T>::displayTree(Node<T> *place) {
+    if (place == nullptr) {
+        //Check if root is null
+        return;
+    }
+
+    std::cout << place->data << "(";
+
+    if (place->left == nullptr) {
+        //Check if left child is null
+        std::cout << "-";
+    } else {
+        std::cout << place->left->data;
+    }
+
+    std::cout << ",";
+
+    if (place->right == nullptr) {
+        //Check if right child is null
+        std::cout << "-";
+    } else {
+        std::cout << place->right->data;
+    }
+
+    std::cout << ")" << std::endl;
+
+    displayTree(place->left);
+    displayTree(place->right);
 }
 
 //Base Template

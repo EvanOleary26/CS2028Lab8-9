@@ -35,7 +35,7 @@ int main() {
 					std::cin >> searchWord;
 					Word tempWord(searchWord);
 					Word result = WordTree.Find(tempWord,WordTree.getRoot());
-					std::cout << "Found: " << result.getWord() << ", count: " << result.getCount() << std::endl;
+					std::cout << "Word: '" << result.getWord() << "' count: " << result.getCount() << std::endl;
 					break;
 				}
 				case 2: {	//Get tree size
@@ -47,7 +47,7 @@ int main() {
 					break;
 				}
 				case 4: {	//Get all words in descending order
-
+					WordTree.displayTree(WordTree.getRoot());
 					break;
 				}
 				case 5: {	//Empty the tree
@@ -61,7 +61,7 @@ int main() {
 					std::cin >> searchWord;
 					Word tempWord(searchWord);
 					Word result = WordTree.Find(tempWord,WordTree.getRoot());
-					std::cout << "Removed: " << result.getWord() << ", count: " << result.getCount() << std::endl;
+					std::cout << "Removed: '" << result.getWord() << "' count: " << result.getCount() << std::endl;
 					break;
 				}
 				case 7: {	//Quit
@@ -89,19 +89,26 @@ void setupTree() {
 		if (i == 0) {
 			textFile.open("MobyDick.txt");
 		} else {
+			if (textFile.is_open()) {
+				textFile.close();
+			}
 			textFile.open("PeterPan.txt");
 		}
 
+		if (!textFile.is_open()) {
+			throw Exception(0, "Failed to open file");
+			continue;
+		}
+
 		while(textFile >> curWord) {
-			if (curWord != "" || curWord != "\n") {	//Check if the current word is blank or newline
+			if (!curWord.empty() || curWord != "\n") {	//Check if the current word is blank or newline
 				transform(curWord.begin(), curWord.end(), curWord.begin(), ::tolower);
-				for (auto ch : curWord) {	//Remove any punctuation
-					if (ispunct(ch)) {
-						curWord.erase(curWord.find_first_of(ch));
-					}
+				curWord.erase(std::remove_if(curWord.begin(), curWord.end(), ::ispunct), curWord.end()); //Remove punctuation
+
+				if (!curWord.empty()) {	//Make sure word is not empty after removing punctuation
+					Word tempWord(curWord);
+					WordTree.Insert(tempWord, WordTree.getRoot());
 				}
-				Word tempWord(curWord);
-				WordTree.Insert(tempWord, WordTree.getRoot());
 			}
 		}
 	}
