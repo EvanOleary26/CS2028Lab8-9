@@ -12,10 +12,10 @@ void setupTree();
 int main() {
 	int promptOption;
 	
-
+	setupTree();
+	
 	while(true) {
 		try{
-			setupTree();
 
 			std::cout << "What would you like to do?" << std::endl;
 			std::cout << "1. Find a word\n" 
@@ -112,5 +112,6 @@ void setupTree() {
 			}
 		}
 	}
+	std::cout << "Removed all punctuation, made all words lowercase, added words to tree." << std::endl;
 	textFile.close();
 }

@@ -1,8 +1,8 @@
 #include "BinaryTree.h"
 
 template<class T>
-BinaryTree<T>::~BinaryTree() {
-    //Recursively go through the tree removing everything from it
+BinaryTree<T>::~BinaryTree() { //Calls ~Node which recurively will delete all elements in the tree
+    delete root;
 }
 
 template<class T>
@@ -131,7 +131,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
     else {  //duplicate
         parent->data++;
     }
-    //Balance(parent, nullptr);
+    Balance(parent, nullptr);
 }
 
 template<class T>
@@ -220,6 +220,7 @@ T BinaryTree<T>::Remove(T inVal) { //recursive remove – NEEDS inOrderPred FUNC
 	else {
         throw Exception(0, "Item not found");
 	}
+    Balance(root, nullptr);
 }
 
 template<class T>
@@ -243,7 +244,7 @@ Node<T>* BinaryTree<T>::inOrderPred(T inVal) {
 
 template <class T>
 int BinaryTree<T>::Balance(Node<T> *parent, Node<T> *child) {
-    if (parent == nullptr) {
+    if (child == nullptr) {
         return 0;
     }
 

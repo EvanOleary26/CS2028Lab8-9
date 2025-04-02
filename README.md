@@ -19,3 +19,6 @@ EO 3/31/25 12:37pm
 EO 3/31/25 8:00pm
   Tried adding and tree balancing to Insert, couldnt get it to work for now so im just commenting it out for now will look at it later, added a display function to the tree temporarily for testing using
   "4. Get all words in descending order" to call it. 
+
+EO 4/2/25 2:14pm
+  Fixed Balancing, added a message for what setup does for TA, got deconstructor for Tree completed

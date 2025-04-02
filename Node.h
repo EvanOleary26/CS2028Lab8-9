@@ -11,6 +11,12 @@ class Node {
         //Constructors
         Node() : data(T()), left(nullptr), right(nullptr) {};
         Node(T inVal) : data(inVal), left(nullptr), right(nullptr) {};
+
+        //Deconstructor
+        ~Node() {
+            delete left;
+            delete right;
+        }
 };
 
 #endif
