@@ -177,7 +177,10 @@ T* BinaryTree<T>::GetAllDescending() {  //Return a pointer to an array
 
 template<class T>
 void BinaryTree<T>::EmptyTree() {   //Clear out the tree leaving a nullptr root node at the end
-
+    delete root->right;
+    delete root->left;
+    root = nullptr;
+    size = 0;
 }
 
 template<class T>
