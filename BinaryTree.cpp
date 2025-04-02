@@ -1,4 +1,5 @@
 #include "BinaryTree.h"
+#include <cmath>
 
 template<class T>
 BinaryTree<T>::~BinaryTree() { //Calls ~Node which recurively will delete all elements in the tree
@@ -166,15 +167,34 @@ int BinaryTree<T>::getHeight(Node<T> *child){
 }
 
 template<class T>
-T* BinaryTree<T>::GetAllAscending() {   //Return a pointer to an array
-	
-    return nullptr;
+T* BinaryTree<T>::GetAllAscending(Node<T> *parent, int &arrSpotCounter, T* ascendArr) {   //Return a pointer to an array
+    if (parent->left != nullptr) {
+        GetAllAscending(parent->left, arrSpotCounter, ascendArr);
+    }
+    parent->data.setHeight(getHeight(parent));
+    parent->data.setBF(getBF(parent));
+    ascendArr[arrSpotCounter] = parent->data;
+	arrSpotCounter++;
+    if (parent->right != nullptr) {
+		GetAllAscending(parent->right, arrSpotCounter, ascendArr);
+	}
+    return ascendArr;
 }
 
 template<class T>
-T* BinaryTree<T>::GetAllDescending() {  //Return a pointer to an array
+T* BinaryTree<T>::GetAllDescending(Node<T>* parent, int& arrSpotCounter, T* ascendArr) {  //Return a pointer to an array
+    if (parent->right != nullptr) {
+        GetAllDescending(parent->right, arrSpotCounter, ascendArr);
+    }
+    parent->data.setHeight(getHeight(parent));
+    parent->data.setBF(getBF(parent));
+    ascendArr[arrSpotCounter] = parent->data;
+    arrSpotCounter++;
+    if (parent->left != nullptr) {
+        GetAllDescending(parent->left, arrSpotCounter, ascendArr);
+    }
     
-    return nullptr;
+    return ascendArr;
 }
 
 template<class T>
@@ -257,13 +277,13 @@ int BinaryTree<T>::Balance(Node<T> *parent, Node<T> *child) {
     int rightHeight = Balance(parent, parent->right);
 
     if (leftHeight - rightHeight > 1) {
-        if ( Balance(parent, parent->left->left) > Balance(parent, parent->left->right) ) {
+        if ( Balance(parent, parent->left->right) > Balance(parent, parent->left->left) ) {
             rotateRight(parent, parent->left);
         } else {
             rotateLR(parent, parent->left);
         }
     } else if (rightHeight - leftHeight > 1) {
-        if (Balance(parent, parent->right->left) > Balance(parent, parent->right->right)) {
+        if (Balance(parent, parent->right->right) > Balance(parent, parent->right->left)) {
             rotateLeft(parent, parent->right);
         } else {
             rotateRL(parent, parent->right);
@@ -307,6 +327,11 @@ void BinaryTree<T>::displayTree(Node<T> *place) {
 
     displayTree(place->left);
     displayTree(place->right);
+}
+
+template<class T>
+int BinaryTree<T>::getBF(Node<T>* parent) {
+	return (getHeight(parent->left) - getHeight(parent->right));
 }
 
 //Base Template

@@ -43,11 +43,25 @@ int main() {
 					break;
 				}
 				case 3: {	//Get all words in ascending order
-
+					int arrSpotCounter = 0;
+					Word* ascendArr = new Word[WordTree.returnSize()];
+					Word *ascarray = WordTree.GetAllAscending(WordTree.getRoot(), arrSpotCounter, ascendArr);
+					//Word ascarray[] = &arrpointer;
+					std::cout << "Word\t\t\tCount\tBF\tHeight\n";
+					for (int i = 0; i < WordTree.returnSize(); i++) {
+						std::cout << ascarray[i].getWord() << "\t\t\t" << ascarray[i].getCount() << "\t" << ascarray[i].getBF() << "\t" << ascarray[i].getHeight() << std::endl;
+					}
 					break;
 				}
 				case 4: {	//Get all words in descending order
-					WordTree.displayTree(WordTree.getRoot());
+					int arrSpotCounter = 0;
+					Word* ascendArr = new Word[WordTree.returnSize()];
+					Word* ascarray = WordTree.GetAllDescending(WordTree.getRoot(), arrSpotCounter, ascendArr);
+					//Word ascarray[] = &arrpointer;
+					std::cout << "Word\t\t\tCount\tBF\tHeight\n";
+					for (int i = 0; i < WordTree.returnSize(); i++) {
+						std::cout << ascarray[i].getWord() << "\t\t\t" << ascarray[i].getCount() << "\t" << ascarray[i].getBF() << "\t" << ascarray[i].getHeight() << std::endl;
+					}
 					break;
 				}
 				case 5: {	//Empty the tree
@@ -66,6 +80,10 @@ int main() {
 				}
 				case 7: {	//Quit
 					return 0;
+				}
+				case 8: {	//Display tree
+					WordTree.displayTree(WordTree.getRoot());
+					break;
 				}
 			}
 		}

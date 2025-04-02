@@ -7,16 +7,24 @@ class Word {
 	private:
 		std::string word;
 		int count;
+        int height;
+        int balanceFactor;
 
     public:
 
-    //Constructor
-    Word() : word(""), count(1) {}
-    Word(std::string inWord) : word(inWord), count(1) {}
+    //Constructor -- may need updates
+    Word() : word(), count(), height(), balanceFactor() {}
+    Word(std::string inWord) : word(inWord), count(1), height(1), balanceFactor(0) {}
+
+    //setters
+	void setBF(int bf) { balanceFactor = bf; }
+	void setHeight(int h) { height = h; }
 
     //Getters
     std::string getWord() { return word; }
     int getCount() { return count; }
+    int getHeight() { return height; }
+    int getBF() { return balanceFactor; }
 
     //Operator Overload
     bool operator>(const Word& right) {
