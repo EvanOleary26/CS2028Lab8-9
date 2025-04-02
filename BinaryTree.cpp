@@ -167,12 +167,14 @@ int BinaryTree<T>::getHeight(Node<T> *child){
 
 template<class T>
 T* BinaryTree<T>::GetAllAscending() {   //Return a pointer to an array
-
+	
+    return nullptr;
 }
 
 template<class T>
 T* BinaryTree<T>::GetAllDescending() {  //Return a pointer to an array
-
+    
+    return nullptr;
 }
 
 template<class T>

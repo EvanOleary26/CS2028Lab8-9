@@ -102,9 +102,10 @@ void setupTree() {
 
 		while(textFile >> curWord) {
 			if (!curWord.empty() || curWord != "\n") {	//Check if the current word is blank or newline
-				transform(curWord.begin(), curWord.end(), curWord.begin(), ::tolower);
-				curWord.erase(std::remove_if(curWord.begin(), curWord.end(), ::ispunct), curWord.end()); //Remove punctuation
-
+				for (int i = 0; i < curWord.length(); i++) {
+					curWord[i] = std::tolower(curWord[i]);
+				}
+				curWord.erase(std::remove_if(curWord.begin(), curWord.end(), ispunct), curWord.end());
 				if (!curWord.empty()) {	//Make sure word is not empty after removing punctuation
 					Word tempWord(curWord);
 					WordTree.Insert(tempWord, WordTree.getRoot());
