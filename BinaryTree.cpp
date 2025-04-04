@@ -16,14 +16,14 @@ void BinaryTree<T>::rotateLeft(Node<T> *parent, Node<T> *child) {
         child->right = root->left;
         root->left = child;
     }
-    if (parent->right == child) { //if new parent is to the right (like "a->b")
+    else if (parent->right == child) { //if new parent is to the right (like "a->b")
         parent->right = child->right; //"a->c"
-        child->right = child->right->left;
+        child->right = parent->right->left;
         parent->right->left = child;
     }
     else { 
         parent->left = child->right;
-        child->right = child->right->left;
+        child->right = parent->left->left;
         parent->left->left = child;
     }
 }
@@ -37,7 +37,7 @@ void BinaryTree<T>::rotateRight(Node<T> *parent, Node<T> *child) {
         child->left = root->right;
         root->right = child;
     }
-    if (parent->right == child) { //if new parent is to the left (like "a<-b")
+    else if (parent->right == child) { //if new parent is to the left (like "a<-b")
         parent->right = child->left; //"a<-c"
         child->left = parent->right->right;
         parent->right->right = child;
@@ -115,6 +115,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
         if (parent->left == nullptr) {
             parent->left = new Node<T>(inVal);
             size++;
+            Balance(nullptr, root);
         }
         else {
             Insert(inVal, parent->left);
@@ -124,6 +125,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
         if (parent->right == nullptr) {
             parent->right = new Node<T>(inVal);
             size++;
+            Balance(nullptr, root);
         }
         else {
             Insert(inVal, parent->right);
@@ -132,7 +134,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
     else {  //duplicate
         parent->data++;
     }
-    Balance(parent, nullptr);
+    
 }
 
 template<class T>
@@ -245,7 +247,7 @@ T BinaryTree<T>::Remove(T inVal) { //recursive remove – NEEDS inOrderPred FUNC
 	else {
         throw Exception(0, "Item not found");
 	}
-    Balance(root, nullptr);
+    Balance(nullptr, root);
 }
 
 template<class T>
@@ -273,27 +275,39 @@ int BinaryTree<T>::Balance(Node<T> *parent, Node<T> *child) {
         return 0;
     }
 
-    int leftHeight = Balance(parent, parent->left);
-    int rightHeight = Balance(parent, parent->right);
+    int leftHeight = getHeight(child->left);
+    int rightHeight = getHeight(child->right);
 
     if (leftHeight - rightHeight > 1) {
-        if ( Balance(parent, parent->left->right) > Balance(parent, parent->left->left) ) {
-            rotateRight(parent, parent->left);
-        } else {
-            rotateLR(parent, parent->left);
+        if (child->left != nullptr) {
+            if ( getHeight(child->left->left) >= getHeight(child->left->right) ) {
+                rotateRight(parent, child);
+            } else {
+                rotateLR(parent, child);
+            }
         }
     } else if (rightHeight - leftHeight > 1) {
-        if (Balance(parent, parent->right->right) > Balance(parent, parent->right->left)) {
-            rotateLeft(parent, parent->right);
-        } else {
-            rotateRL(parent, parent->right);
+        if (child-> right != nullptr) {
+            if (getHeight(child->right->right) >= getHeight(child->right->left)) {
+                rotateLeft(parent, child);
+            } else {
+                rotateRL(parent, child);
+            }
         }
+    }
+
+    if (child->left != nullptr) {
+        Balance(child, child->left);
+    }
+    if (child->right != nullptr) {
+        Balance(child, child->right);
     }
 
     if (leftHeight > rightHeight) {
         return leftHeight + 1;
+    } else {
+        return rightHeight + 1;
     }
-    return rightHeight + 1;
 }
 
 

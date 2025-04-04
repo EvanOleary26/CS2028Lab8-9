@@ -1,4 +1,5 @@
 #include<iostream>
+#include <iomanip>
 #include<fstream>
 #include<string>
 
@@ -46,10 +47,16 @@ int main() {
 					int arrSpotCounter = 0;
 					Word* ascendArr = new Word[WordTree.returnSize()];
 					Word *ascarray = WordTree.GetAllAscending(WordTree.getRoot(), arrSpotCounter, ascendArr);
-					//Word ascarray[] = &arrpointer;
-					std::cout << "Word\t\t\tCount\tBF\tHeight\n";
+					int maxWordSize{};
+					for (int i{}; i < sizeof(ascarray); i++) {
+						if (ascarray[i].getWord().length() > maxWordSize) {
+							maxWordSize = ascarray[i].getWord().length();
+						}
+					}
+
+					std::cout << std::left << std::setw(maxWordSize + 6) << "Word" << "\tCount\tBF\tHeight\n";
 					for (int i = 0; i < WordTree.returnSize(); i++) {
-						std::cout << ascarray[i].getWord() << "\t\t\t" << ascarray[i].getCount() << "\t" << ascarray[i].getBF() << "\t" << ascarray[i].getHeight() << std::endl;
+						std::cout << std::left << std::setw(maxWordSize + 6) << ascarray[i].getWord() << "\t" << ascarray[i].getCount() << "\t" << ascarray[i].getBF() << "\t" << ascarray[i].getHeight() << std::endl;
 					}
 					break;
 				}
@@ -57,10 +64,16 @@ int main() {
 					int arrSpotCounter = 0;
 					Word* ascendArr = new Word[WordTree.returnSize()];
 					Word* ascarray = WordTree.GetAllDescending(WordTree.getRoot(), arrSpotCounter, ascendArr);
-					//Word ascarray[] = &arrpointer;
-					std::cout << "Word\t\t\tCount\tBF\tHeight\n";
+					int maxWordSize{};
+					for (int i{}; i < sizeof(ascarray); i++) {
+						if (ascarray[i].getWord().length() > maxWordSize) {
+							maxWordSize = ascarray[i].getWord().length();
+						}
+					}
+
+					std::cout << std::left << std::setw(maxWordSize + 6) << "Word" << "\tCount\tBF\tHeight\n";
 					for (int i = 0; i < WordTree.returnSize(); i++) {
-						std::cout << ascarray[i].getWord() << "\t\t\t" << ascarray[i].getCount() << "\t" << ascarray[i].getBF() << "\t" << ascarray[i].getHeight() << std::endl;
+						std::cout << std::left << std::setw(maxWordSize + 6) << ascarray[i].getWord() << "\t" << ascarray[i].getCount() << "\t" << ascarray[i].getBF() << "\t" << ascarray[i].getHeight() << std::endl;
 					}
 					break;
 				}
