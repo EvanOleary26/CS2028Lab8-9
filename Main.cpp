@@ -86,9 +86,9 @@ int main() {
 					std::string searchWord;
 					std::cout << "What word would you like to remove?" << std::endl;
 					std::cin >> searchWord;
-					Word tempWord(searchWord);
+					Word tempWord{ searchWord };
 					Word result = WordTree.Find(tempWord,WordTree.getRoot());
-					WordTree.Remove(tempWord,WordTree.getRoot());
+					WordTree.Remove(result,WordTree.getRoot());
 					std::cout << "Removed: '" << result.getWord() << "' count: " << result.getCount() << std::endl;
 					break;
 				}

@@ -4,13 +4,13 @@
 #include <string>
 
 class Word {
-	private:
+	public:
 		std::string word;
 		int count;
         int height;
         int balanceFactor;
 
-    public:
+    //public:
 
     //Constructor -- may need updates
     Word() : word(), count(), height(), balanceFactor() {}

@@ -157,6 +157,9 @@ template <class T>
 int BinaryTree<T>::getHeight(Node<T> *child){
     if (child == nullptr) {
         return 0;
+        }
+    if (child->data.count < 0) { //if it somehow bypasses the nullptr for a not-real word
+        return 0;
     }
 
     int leftHeight = getHeight(child->left);
@@ -265,12 +268,14 @@ Node<T>* BinaryTree<T>::Remove(T inVal, Node<T> *parent) {
     } else {    //parent->data == inVal
         if (parent->left == nullptr) {  //Remove right node
             Node<T> *temp = parent->right;
+            parent = nullptr;
             delete parent;
             size--;
             Balance(nullptr, root);
             return temp;
         } else if (parent->right == nullptr) {  //Remove left node
             Node<T> *temp = parent->left;
+            parent = nullptr;
             delete parent;
             size--;
             Balance(nullptr, root);
