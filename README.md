@@ -25,3 +25,6 @@ EO 4/2/25 2:14pm
 
 EO 4/4/25 12:26pm 
   Mostly fixed balancing, sill have some nodes that have a height of 11 or 12 which seems too high. Fixed formatting for the ascending and descending. Need to take a look at remove, it doesnt seem to be actually removing elements.
+
+EO 4/7/25 1:15pm
+  Redid Remove function to make it properly remove values 

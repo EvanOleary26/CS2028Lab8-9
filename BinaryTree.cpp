@@ -140,7 +140,7 @@ void BinaryTree<T>::Insert(T inVal, Node<T> *parent) {  //Need to add Tree Balan
 template<class T>
 T BinaryTree<T>::Find(T target, Node<T> *parent) {
     if (parent == nullptr) {
-        throw Exception(0, "Cannot find item");
+        throw Exception(-1, "Cannot find item");
     }
     if (target == parent->data) {
         return parent->data;
@@ -207,6 +207,7 @@ void BinaryTree<T>::EmptyTree() {   //Clear out the tree leaving a nullptr root 
     size = 0;
 }
 
+/*
 template<class T>
 T BinaryTree<T>::Remove(T inVal) { //recursive remove – NEEDS inOrderPred FUNCTION TO WORK
 	Node<T>* temp = root;
@@ -249,8 +250,54 @@ T BinaryTree<T>::Remove(T inVal) { //recursive remove – NEEDS inOrderPred FUNC
 	}
     Balance(nullptr, root);
 }
+*/
 
-template<class T>
+template <class T>
+Node<T>* BinaryTree<T>::Remove(T inVal, Node<T> *parent) {
+    if (parent == nullptr) {
+        return parent;
+    }
+    
+    if (inVal < parent->data) { //Move left if inVal is less than parent->data
+        parent->left = Remove(inVal, parent->left);
+    } else if (inVal > parent->data) {  //Move right if inVal is more than parent->data
+        parent->right = Remove(inVal, parent->right);
+    } else {    //parent->data == inVal
+        if (parent->left == nullptr) {  //Remove right node
+            Node<T> *temp = parent->right;
+            delete parent;
+            size--;
+            Balance(nullptr, root);
+            return temp;
+        } else if (parent->right == nullptr) {  //Remove left node
+            Node<T> *temp = parent->left;
+            delete parent;
+            size--;
+            Balance(nullptr, root);
+            return temp;
+        }
+
+        //if neither is null
+        parent->data = inOrderSuccessor(parent->right); //find lowest value in right subtree
+        parent->right = Remove(parent->data, parent->right);  
+        
+    }
+    
+    return parent;
+}
+
+template <class T>
+T BinaryTree<T>::inOrderSuccessor(Node<T> *inNode) {
+    T minimum = inNode->data;
+    while (inNode->left != nullptr) {
+        minimum = inNode->left->data;
+        inNode = inNode->left;
+    }
+    return minimum;
+}
+
+
+template <class T>
 Node<T>* BinaryTree<T>::inOrderPred(T inVal) {
 	Node<T>* temp = root;
 	while (temp->data != inVal) {

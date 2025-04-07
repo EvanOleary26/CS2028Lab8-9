@@ -40,12 +40,12 @@ int main() {
 					break;
 				}
 				case 2: {	//Get tree size
-					std::cout << "The size of the tree is: " << WordTree.returnSize() << std::endl;
+					std::cout << "The size of the tree is: " << WordTree.getSize() << std::endl;
 					break;
 				}
 				case 3: {	//Get all words in ascending order
 					int arrSpotCounter = 0;
-					Word* ascendArr = new Word[WordTree.returnSize()];
+					Word* ascendArr = new Word[WordTree.getSize()];
 					Word *ascarray = WordTree.GetAllAscending(WordTree.getRoot(), arrSpotCounter, ascendArr);
 					int maxWordSize{};
 					for (int i{}; i < sizeof(ascarray); i++) {
@@ -55,14 +55,14 @@ int main() {
 					}
 
 					std::cout << std::left << std::setw(maxWordSize + 6) << "Word" << "\tCount\tBF\tHeight\n";
-					for (int i = 0; i < WordTree.returnSize(); i++) {
+					for (int i = 0; i < WordTree.getSize(); i++) {
 						std::cout << std::left << std::setw(maxWordSize + 6) << ascarray[i].getWord() << "\t" << ascarray[i].getCount() << "\t" << ascarray[i].getBF() << "\t" << ascarray[i].getHeight() << std::endl;
 					}
 					break;
 				}
 				case 4: {	//Get all words in descending order
 					int arrSpotCounter = 0;
-					Word* ascendArr = new Word[WordTree.returnSize()];
+					Word* ascendArr = new Word[WordTree.getSize()];
 					Word* ascarray = WordTree.GetAllDescending(WordTree.getRoot(), arrSpotCounter, ascendArr);
 					int maxWordSize{};
 					for (int i{}; i < sizeof(ascarray); i++) {
@@ -72,7 +72,7 @@ int main() {
 					}
 
 					std::cout << std::left << std::setw(maxWordSize + 6) << "Word" << "\tCount\tBF\tHeight\n";
-					for (int i = 0; i < WordTree.returnSize(); i++) {
+					for (int i = 0; i < WordTree.getSize(); i++) {
 						std::cout << std::left << std::setw(maxWordSize + 6) << ascarray[i].getWord() << "\t" << ascarray[i].getCount() << "\t" << ascarray[i].getBF() << "\t" << ascarray[i].getHeight() << std::endl;
 					}
 					break;
@@ -88,6 +88,7 @@ int main() {
 					std::cin >> searchWord;
 					Word tempWord(searchWord);
 					Word result = WordTree.Find(tempWord,WordTree.getRoot());
+					WordTree.Remove(tempWord,WordTree.getRoot());
 					std::cout << "Removed: '" << result.getWord() << "' count: " << result.getCount() << std::endl;
 					break;
 				}

@@ -63,6 +63,15 @@
         "system_error": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "format": "cpp"
+        "format": "cpp",
+        "ratio": "cpp",
+        "__node_handle": "cpp",
+        "deque": "cpp",
+        "__memory": "cpp",
+        "vector": "cpp",
+        "charconv": "cpp",
+        "chrono": "cpp",
+        "array": "cpp",
+        "functional": "cpp"
     }
 }
